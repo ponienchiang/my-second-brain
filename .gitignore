@@ -1,6 +1,3 @@
-# Output directory
-output/
-
 # Python virtual environment
 venv/
 __pycache__/
