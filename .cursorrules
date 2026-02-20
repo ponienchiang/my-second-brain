@@ -112,9 +112,9 @@ If needed, you can further use the `web_scraper.py` file to scrape the web page 
 
 # Scratchpad
 
-## 任務：列出2025年中國受矚目或成功的startups及其商業模式
-[X] 搜尋2025年中國新創公司資訊
-[X] 整理各新創公司的商業模式
-[X] 分類整理（AI基礎模型、具身智能、企業服務等）
-[X] 建立完整清單文件並儲存至 /output
+## 任務：AI生成內容檢測系統研究
+[X] 調查AI生成文字影音的辨識系統（商業化與開源項目）
+[X] 分析不同辨識系統的門檻成本
+[X] 研究智慧眼鏡整合AI生成物辨識系統的方向
+[X] 整理文檔並儲存至 docs/ai_detection
 [X] 任務完成
