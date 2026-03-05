@@ -93,6 +93,49 @@ Snippet: This is a snippet of the search result
 ```
 If needed, you can further use the `web_scraper.py` file to scrape the web page content.
 
+## PDF Analyzer
+
+You can use the `tools/pdf_analyzer.py` file to convert PDF presentations to images and analyze them with multimodal LLMs (treating PDF pages as images).
+
+**Automatic Organization**: By default, the tool automatically organizes output in `output/pdf_analysis/<PDF_name>/` with:
+- `images/` - Converted page images (default: max-width 800px for cost optimization)
+- `analysis.md` - Full analysis with page-by-page and summary (Markdown format for readability)
+- `summary.md` - Overall summary (Markdown format, default: Chinese/中文, for multi-page PDFs)
+
+**Default Settings**:
+- `--max-width 800` - Cost-optimized (reduces cost by ~60%)
+- `--summary-language zh` - Chinese output by default
+
+```bash
+venv/bin/python3 tools/pdf_analyzer.py document.pdf [--prompt "Your analysis prompt"] [--provider {openai|anthropic|gemini}] [--keep-images] [--output-dir ./images] [--output result.txt] [--no-auto-organize]
+```
+
+The tool:
+- Converts each PDF page to a high-resolution image
+- Analyzes each page with a multimodal LLM (GPT-4o, Claude, Gemini, etc.)
+- Provides page-by-page analysis and an optional summary
+- Supports custom prompts for specific analysis needs
+- **Automatically organizes results** in structured directories by PDF name
+
+Example:
+```bash
+# Analyze a presentation (auto-organized in output/pdf_analysis/<name>/)
+venv/bin/python3 tools/pdf_analyzer.py presentation.pdf --provider openai
+
+# Analyze with custom prompt using Claude
+venv/bin/python3 tools/pdf_analyzer.py presentation.pdf --prompt "Summarize the key points" --provider anthropic
+
+# Optimize for cost: resize images to reduce token count (saves 50-60% cost)
+venv/bin/python3 tools/pdf_analyzer.py presentation.pdf --max-width 1024 --provider openai
+
+# Disable auto-organization and use custom directory
+venv/bin/python3 tools/pdf_analyzer.py presentation.pdf --no-auto-organize --output-dir ./custom_dir
+```
+
+Note: Requires `pdf2image` and `poppler-utils`:
+- Install Python package: `pip install pdf2image Pillow`
+- Install poppler: `brew install poppler` (macOS) or `sudo apt-get install poppler-utils` (Ubuntu)
+
 # Lessons
 
 ## User Specified Lessons
@@ -112,9 +155,31 @@ If needed, you can further use the `web_scraper.py` file to scrape the web page 
 
 # Scratchpad
 
+## 任務：PDF多模態分析工具
+[X] 創建PDF轉圖片工具（pdf_analyzer.py）
+[X] 整合多模態LLM分析功能
+[X] 更新requirements.txt添加pdf2image依賴
+[X] 更新.cursorrules文檔說明
+[X] 任務完成
+
 ## 任務：AI生成內容檢測系統研究
 [X] 調查AI生成文字影音的辨識系統（商業化與開源項目）
 [X] 分析不同辨識系統的門檻成本
 [X] 研究智慧眼鏡整合AI生成物辨識系統的方向
 [X] 整理文檔並儲存至 docs/ai_detection
+[X] 任務完成
+
+## 任務：TradePulse簡報分析
+[X] 使用pdf_analyzer分析TradePulse_Taiwan_Partner_Pitch.pptx.pdf（openai/anthropic均因Connection error，僅產出錯誤訊息；images已產出）
+[X] 確認輸出檔案位置並回報摘要（需LLM連線恢復或改用離線流程）
+[X] 從自營商視角分析pitch，提出疑問、驗證點和深入議題
+[X] 任務完成
+
+## 任務：TradePulse Pitch深度分析（自營商視角）
+[X] 閱讀TradePulse產品pitch和台灣市場進入策略分析文件
+[X] 從1.5-2級市場自營商角度提出關鍵疑問
+[X] 識別值得驗證的方向和與已知事實的出入
+[X] 分析需要深入考慮的合作議題
+[X] 建立決策框架和驗證步驟
+[X] 產出完整分析文件至 output/TradePulse_pitch_analysis.md
 [X] 任務完成
